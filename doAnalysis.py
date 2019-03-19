@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 # import seaborn as seaborn
 import json
 
-with open('friends.json', 'r', encoding='utf-8') as f:
+with open('output/friends.json', 'r', encoding='utf-8') as f:
   friends = json.load(f)
 
 total = len(friends)
@@ -29,7 +29,7 @@ ax.legend(wedges, ['男', '女', '未知'],
           bbox_to_anchor=(1, 0, 0.5, 1))
 plt.setp(autotexts, size=8, weight='bold')
 ax.set_title('微信好友性别分布')
-plt.show()
+plt.savefig('output/gender.png', dpi=300)
 
 import re
 import jieba
@@ -47,13 +47,20 @@ word_space_split = ' '.join(wordlist)
 from wordcloud import WordCloud, ImageColorGenerator
 import numpy as np
 import PIL.Image as Image
-# coloring = np.array(Image.open("/Users/apple/Desktop/wechat.jpg"))
-my_wordcloud = WordCloud(background_color="white", max_words=2000,
-                        max_font_size=60, random_state=42, scale=2,
+
+coloring = np.array(Image.open("./mask.jpg"))
+
+my_wordcloud = WordCloud(background_color=None, max_words=2000,
+                        #width=400, height=400,
+                        max_font_size=60, #min_font_size=10,
+                        mode='RGBA',
+                        random_state=33, scale=3,
+                        mask=coloring,
                         font_path="/Library/Fonts/Songti.ttc").generate(word_space_split)
 
-# image_colors = ImageColorGenerator(coloring)
-# plt.imshow(my_wordcloud.recolor(color_func=image_colors))
-plt.imshow(my_wordcloud)
-plt.axis("off")
-plt.show()
+my_wordcloud.to_file('output/friends.png')
+'''image_colors = ImageColorGenerator(coloring)
+my_wordcloud.recolor(color_func=image_colors)
+my_wordcloud.to_file('output/friends2.png')'''
+
+# TODO: paste tranparent png to a background image

@@ -1,10 +1,9 @@
 # Artifact
-friends.json
-
 node_modules/
 build/
 coverage/
 dist/
+output/
 
 # Cruft
 *~
