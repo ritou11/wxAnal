@@ -47,6 +47,8 @@ word_space_split = ' '.join(wordlist)
 from wordcloud import WordCloud, ImageColorGenerator
 import numpy as np
 import PIL.Image as Image
+import PIL.ImageDraw as ImageDraw
+import PIL.ImageFont as ImageFont
 
 coloring = np.array(Image.open("./mask.jpg"))
 
@@ -59,8 +61,12 @@ my_wordcloud = WordCloud(background_color=None, max_words=2000,
                         font_path="/Library/Fonts/Songti.ttc").generate(word_space_split)
 
 my_wordcloud.to_file('output/friends.png')
-'''image_colors = ImageColorGenerator(coloring)
-my_wordcloud.recolor(color_func=image_colors)
-my_wordcloud.to_file('output/friends2.png')'''
 
-# TODO: paste tranparent png to a background image
+background = Image.open("background.png")
+img = Image.fromarray(my_wordcloud.to_array(), 'RGBA')
+background.paste(img, (0, 0), img)
+ttfont = ImageFont.truetype("/Library/Fonts/Songti.ttc", 100)
+draw = ImageDraw.Draw(background)
+draw.text((368,1360),'朋友们的个性签名', fill=(180,255,93),font=ttfont)
+
+background.save('output/withbackground.png')
