@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 # import seaborn as seaborn
 import json
 
-with open('output/friends.json', 'r', encoding='utf-8') as f:
+with open('../output/friends.json', 'r', encoding='utf-8') as f:
   friends = json.load(f)
 
 total = len(friends)
@@ -29,7 +29,7 @@ ax.legend(wedges, ['男', '女', '未知'],
           bbox_to_anchor=(1, 0, 0.5, 1))
 plt.setp(autotexts, size=8, weight='bold')
 ax.set_title('微信好友性别分布')
-plt.savefig('output/gender.png', dpi=300)
+plt.savefig('../output/gender.png', dpi=300)
 
 import re
 import jieba
@@ -50,7 +50,7 @@ import PIL.Image as Image
 import PIL.ImageDraw as ImageDraw
 import PIL.ImageFont as ImageFont
 
-coloring = np.array(Image.open("./mask.jpg"))
+coloring = np.array(Image.open("../res/mask.jpg"))
 
 my_wordcloud = WordCloud(background_color=None, max_words=2000,
                         #width=400, height=400,
@@ -60,13 +60,13 @@ my_wordcloud = WordCloud(background_color=None, max_words=2000,
                         mask=coloring,
                         font_path="/Library/Fonts/Songti.ttc").generate(word_space_split)
 
-my_wordcloud.to_file('output/friends.png')
+my_wordcloud.to_file('../output/friends.png')
 
-background = Image.open("background.png")
+background = Image.open("../res/background.png")
 img = Image.fromarray(my_wordcloud.to_array(), 'RGBA')
 background.paste(img, (0, 0), img)
 ttfont = ImageFont.truetype("/Library/Fonts/Songti.ttc", 100)
 draw = ImageDraw.Draw(background)
 draw.text((368,1360),'朋友们的个性签名', fill=(180,255,93),font=ttfont)
 
-background.save('output/withbackground.png')
+background.save('../output/withbackground.png')
