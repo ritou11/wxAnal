@@ -16,7 +16,7 @@
     "@material-ui/core": "^3.0.3",
     "highcharts": "^6.1.2",
     "highcharts-react-official": "^1.4.0",
-    "lodash": "^4.17.10",
+    "lodash": "^4.17.19",
     "react": "^16.5.0",
     "react-dom": "^16.5.0",
     "react-scripts": "^1.1.5"
